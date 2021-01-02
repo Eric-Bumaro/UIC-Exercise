@@ -12,8 +12,8 @@ public class GUI{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                Controller controller=new Controller(bank);
-                ViewSimple viewSimple=new ViewSimple(bank,controller);
+                ControllerSimple controllerSimple=new ControllerSimple(bank);
+                ViewSimple viewSimple=new ViewSimple(bank,controllerSimple);
             }
         });
     }

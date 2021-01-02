@@ -12,8 +12,10 @@ public class GUI{
 //        					// TODO Auto-generated catch block
 //        					e.printStackTrace();
 //        				}
+                        ControllerSimple controllerSimple=new ControllerSimple(bank);
+                        ViewSimple viewSimple=new ViewSimple(bank,controllerSimple);
                         ControllerGetMoney controller=new ControllerGetMoney(bank);//the previous
-                        ViewGetMoney viewSimple=new ViewGetMoney(bank,controller);
+                        ViewGetMoney viewgetmoney=new ViewGetMoney(bank,controller);
                         ControllerWithdraw controller1=new ControllerWithdraw(bank);
                         ViewWithdraw viewWithdraw=new ViewWithdraw(bank,controller1);
                         ControllerCreate controller2=new ControllerCreate(bank);
