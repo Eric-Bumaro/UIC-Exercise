@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 6 elements to &apos;Question13/src/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;Question12&apos;&#x0D;&#x0A;- Destination element: &apos;Question13/src/(default package)&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     ViewHistory.java&#x0D;&#x0A;     ViewSimple.java&#x0D;&#x0A;     ViewWithdraw.java&#x0D;&#x0A;     View.java&#x0D;&#x0A;     ViewCreate.java&#x0D;&#x0A;     ViewGetMoney.java" description="Copy compilation units" destination="=Question13/src&lt;" element1="/src&lt;{ViewHistory.java" element2="/src&lt;{ViewSimple.java" element3="/src&lt;{ViewWithdraw.java" element4="/src&lt;{View.java" element5="/src&lt;{ViewCreate.java" element6="/src&lt;{ViewGetMoney.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1609648423308" units="6" version="1.0"/>
+</session>

@@ -13,7 +13,7 @@ public class ViewSimple extends JFrame implements ModelListener{
         m.addListener(this);
         label=new JLabel("total money: "+m.totalMoney(), label.CENTER);
         this.add(label);
-        this.setTitle("View imple");//the corresponding outlook
+        this.setTitle("View Simple");//the corresponding outlook
         this.setPreferredSize(new Dimension(800,100));//set the location
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         double width = dimension.getWidth() / 2;

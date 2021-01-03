@@ -19,7 +19,6 @@ public class ViewWithdraw extends View<ControllerWithdraw>{
         t2.setText("Type an amount of money here");
         this.add(t1);
         this.add(t2);
-        m.addListener(this);
         this.setTitle("View Withdraw");
         this.setSize(new Dimension(400,200));//set the location
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

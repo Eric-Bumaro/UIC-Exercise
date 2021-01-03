@@ -14,7 +14,6 @@ public class ViewGetMoney extends View<ControllerGetMoney>{
         t.setText("Type a customer name here");//the origin text
         this.add(t);
         JButton tell_me_the_money=new JButton("Tell me the money");
-        m.addListener(this);
         this.add(tell_me_the_money);
         tell_me_the_money.addActionListener(new ActionListener() {
             @Override

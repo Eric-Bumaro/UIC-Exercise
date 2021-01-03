@@ -8,6 +8,7 @@ public abstract class View<T extends Controller> extends JFrame implements Model
         this.m = m;
         this.c = c;
         this.setVisible(true);
+        m.addListener(this);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(400,600);
     }

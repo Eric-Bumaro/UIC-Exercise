@@ -5,9 +5,7 @@ public class ViewHistory extends View<ControllerHistory>{
     public ViewHistory(Bank m, ControllerHistory c) {
         super(m, c);//the father constructor
         this.setTitle("View History");
-        m.addListener(this);
         add(new HistoryPanel(m));
-        this.setTitle("View Money");//the corresponding outlook
         this.setSize(new Dimension(400,200));//set the location
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         double width = dimension.getWidth() / 2;

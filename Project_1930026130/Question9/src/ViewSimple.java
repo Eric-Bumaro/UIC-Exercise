@@ -9,7 +9,6 @@ public class ViewSimple extends View implements ModelListener{
         super(m,c);
         label=new JLabel("total money: "+m.totalMoney(), label.CENTER);//center it
         this.add(label);
-        m.addListener(this);
         this.setTitle("View Simple");//the corresponding outlook
         this.setPreferredSize(new Dimension(800,100));//set the location
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

@@ -10,7 +10,6 @@ public class ViewCreate extends View<ControllerCreate>{
 
     public ViewCreate(Bank m, ControllerCreate c) {
         super(m, c);
-        m.addListener(this);
         this.setLayout(new GridLayout(4,1));//set the layout
         cb.addItem("credit index");
         cb.addItem("student account");
