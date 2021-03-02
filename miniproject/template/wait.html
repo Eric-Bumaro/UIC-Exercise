@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wait……</title>
+  <base href="/">
+  <link rel="stylesheet" type="text/css" href="../static/css/wait.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script>
+  // var done=0;
+  // function sleep(delay){
+  //   var start=(new Date()).getTime();
+  //   while((new Date()).getTime()-start<delay){
+  //     continue;
+  //   }
+  // }
+  //$(document).ready(function() {
+    //requestURL = "data.json"
+    // var request=new XMLHttpRequest()
+    // request.open("get",requestURL)
+    // request.send(null)
+    //   while (parseInt(done)!=1 || parseInt(done)!=2) {
+    //       request.onload=function (){
+    //         if(request.status==200){
+    //           var json=JSON.parse(request.responseText);
+    //           document.write(json)
+    //         }
+    //       }
+    //       break
+    //       sleep(2000);
+    //   }
+    //   location.replace("/recognize/")
+  //})
+</script>
+</head>
+<body>
+<p>Please wait for a moment……</p>
+<p>
+  <button onclick="location.assign('/recognize/')">Judge if it is done</button>
+</p>
+<img src="../static/photo/wait.gif">
+</body>
+</html>

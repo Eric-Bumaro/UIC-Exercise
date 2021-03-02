@@ -1,0 +1,34 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload your file</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="../static/css/upload.css">
+    <script>
+        function changelanguage(value){
+            document.getElementById("allButton").innerHTML=value.innerHTML
+        }
+        function deletel(value){
+            value.value=""
+        }
+    </script>
+</head>
+<body>
+    <form action="/wait/" method="post" enctype="multipart/form-data" class="back" id="update">
+       {% csrf_token %}
+        Please upload your audio file here:
+        <p>
+        <input type="file" accept="audio/*" name="AudioFile" required >
+        </p>
+        Please choose your language:
+        <input name="language" id="language" list="list" placeholder="" type="text" onclick="deletel(this)">
+        <datalist id="list">
+            <option>English</option>
+            <option>中文</option>
+        </datalist>
+    <p>
+        <input type="submit" value="Upload" form="update">
+    </p>
+    </form>
+</body>
+</html>
