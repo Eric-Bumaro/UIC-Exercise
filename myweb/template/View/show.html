@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="/static/show.css">
+</head>
+<body>
+<table border="1" cellspacing="0" width="500px" id="Students">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Register Time</th>
+    </tr>
+    {% for stu in students %}
+    <tr>
+        <td>{{ stu.id }}</td>
+        <td>{{ stu.name }}</td>
+        <td>{{ stu.register_time }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div>
+    <a href="/student/show1/?num=1">First page</a>
+    &emsp;
+    {% if students.has_previous %}
+    <a href="/student/show1/?num={{ students.previous_page_number }}">Previous page</a>
+    {% endif %}
+    &emsp;
+    {% for n in page_list %}
+    {% if n == current_page %}
+    <a href="/student/show1/?num={{ n }}">{{ n }}</a>
+    &emsp;
+    {% else %}
+    <a href="/student/show1/?num={{ n }}">{{ n }}</a>
+    &emsp;
+    {% endif %}
+    {% endfor %}
+    {% if students.has_next %}
+    <a href="/student/show1/?num={{ students.next_page_number }}">Next page</a>
+    {% endif %}
+    &emsp;
+    <a href="/student/show1/?num={{ all_students.num_pages }}">Last page</a>
+</div>
+</body>
+</html>

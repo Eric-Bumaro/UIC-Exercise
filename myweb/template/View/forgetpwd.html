@@ -1,0 +1,122 @@
+<html>
+<head>
+    <title>Forget the password</title>
+    <link rel="stylesheet" type="text/css" href="/static/forgetpwd.css">
+</head>
+<script src="/static/jquery-3.4.1.min.js"></script>
+<script>
+    var userKey;
+    var usertype="0";
+    function send_Hide(){
+        if(document.getElementById("Teacher").checked){
+            usertype="1"
+            var tname=document.getElementById("tid").value.replace(" ","-")
+            $.ajax({
+                type: "POST",
+                url: "/getUserKey/%23type="+usertype+"&id="+tname,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success:  function(response){
+                    userKey=response
+            }
+            });
+        }else {
+            var sid=document.getElementById("sid").value+""
+            $.ajax({
+                type: "POST",
+                url: "/getUserKey/%23type="+usertype+"&id="+sid,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success: function (response) {
+                    userKey = response
+                }
+            });
+            if (userKey == 1) {
+                document.getElementById("errormsg").innerHTML = "Please choose your user type!";
+            }
+            if (userKey == 2) {
+                document.getElementById("errormsg").innerHTML = "Wrong name!";
+            }
+            if (userKey == 3) {
+                document.getElementById("errormsg").innerHTML = "Wrong ID!";
+            }
+        }
+        var sendKeybu = document.getElementById("sendKeybu")
+        for(let i=0;i<=60;i++){
+            (function(j){
+		        setTimeout(function(){
+                sendKeybu.innerHTML = "<label>You can try again after " + (60-j) + " seconds!</label>"
+                if(j==60){
+                    sendKeybu.innerHTML = "<button onclick='send_Hide()'>Click here to send!</button>"
+                }
+		    },1000*i)}
+	        )(i);
+        }
+    }
+    function showTeaLog() {
+        document.getElementById("stuPro").style.display = "none"
+        document.getElementById("teaPro").style.display = "block"
+        $('#stuPro').attr("required", "true");
+        $('#teaPro').attr("required", "false");
+    }
+    function check(){
+        var pwOne=document.forms["forPassForm"]["pwd"].value;
+        var pwTwo=document.forms["forPassForm"]["check_pwd"].value;
+        if(pwOne!=pwTwo){
+            document.getElementById("errormsg").innerHTML="Not the same password";
+            return false;
+        }else if(pwOne.length<3){
+            document.getElementById("errormsg").innerHTML="The length of the password must be larger than three!";
+            return false;
+        }
+        if(document.forms["forPassForm"]["userKey"].value!=userKey){
+            document.getElementById("errormsg").innerHTML="Wrong check-key!";
+            return false;
+        }
+        return true;
+    }
+</script>
+<body>
+    <form action="{% url 'uic:forgetpwd'  %}" method="post" name="forPassForm" onsubmit="return check()">
+        {% csrf_token %}
+        <p>
+            <input type="radio" name="user" id="Student" value="Student" onclick="showStu()">Student
+            &emsp;
+            <input type="radio" name="user" id="Teacher" value="Teacher" onclick="showTea()">Teacher
+        </p>
+        <div class="tip">
+            <p style="display: none" id="stuPro"><label class="tipText" for="id"> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;ID:</label><input type="text" name="sid" id="sid" value="{{ id }}"/></p>
+            <p style="display: none" id="teaPro"><label class="tipText" for="tname">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Name:</label><input type="text" name="tid" id="tid" value="{{ id }}"/></p>
+        </div>
+        <p>
+            <label for="pwd">&emsp;&emsp;&emsp;&emsp;Password:</label><input type="password" name="pwd" id="pwd" required>
+        </p>
+        <p>
+            <label for="check_pwd"> Confirm Password:</label><input type="password" name="check_pwd" id="check_pwd" required>
+        </p>
+        <p>
+            <label for="userKey">Send a check-id key to your Email address and check it:</label>
+            <input type="text" id="userKey" name="userKey" required>
+            <label id="sendKeybu"><button onclick="send_Hide()">Click here to send!</button></label>
+        </p>
+        <p>
+            <h3 id="errormsg"></h3>
+        </p>
+            <label>&emsp;&emsp;&emsp;</label><input type="submit" value="Change">
+            &emsp;
+            <a href="/welcome/">Back to the Welcome Page</a>
+    </form>
+</body>
+<script>
+    function showStu() {
+        document.getElementById("teaPro").style.display = "none"
+        document.getElementById("stuPro").style.display = "block"
+        $('#teaPro').attr("required", "false");
+        $('#stuPro').attr("required", "true");
+    }
+    function showTea(){
+        document.getElementById("stuPro").style.display="none"
+        document.getElementById("teaPro").style.display="block"
+        $('#teaPro').attr("required", "true");
+        $('#stuPro').attr("required", "false");
+    }
+</script>
+</html>

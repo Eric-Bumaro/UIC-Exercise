@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Successfully</title>
+</head>
+<body>
+    <h1>SuccessfulLy register in!!!</h1>
+    <br>
+    <p>
+        {% ifequal type 0 %}
+            <h2 style="color: #ea2020">Please remember your id:{{ stuID }}</h2>
+        {% endifequal %}
+        {% ifequal type 1 %}
+            <h2>Welcome! {{ teaName }}</h2>
+        {% endifequal %}
+    </p>
+    <a href="/welcome/">Back to the welcome page</a>
+</body>
+</html>

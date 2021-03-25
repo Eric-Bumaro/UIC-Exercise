@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student information</title>
+</head>
+<body>
+    <h2>Welcome to the website of XDW</h2>
+    <br>
+    <h1>Here is your personal information:</h1>
+    <br>
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Operation</th>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>{{ user.sid }}</td>
+            <td>Change ID is not allowed!</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{ user.sname }}</td>
+            <td><a href="{% url 'uic:stuChanInfo' 'name' %}">Click here to change!</a></td>
+        </tr>
+        <tr>
+            <td>Time you register</td>
+            <td>{{ user.register_time }}</td>
+            <td>Change your register time is not allowed!</td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td><img src="/media/student_image/{{ user.image }}"/></td>
+            <td><a href="{% url 'uic:stuChanInfo' 'image' %}">Click here to change!</a></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ user.emailAdd }}</td>
+            <td><a href="{% url 'uic:stuChanInfo' 'emailAdd' %}">Click here to change!</a></td>
+        </tr>
+        <tr>
+            <td>Course</td>
+            <td>{{ user.course_field }}</td>
+            <td>You are not allowed to change your course!</td>
+        </tr>
+    </table>
+    <a href="{% url 'uic:stuChanInfo' 'password' %}">Click here to change your password!</a><br>
+    <a href="{% url 'uic:login' 3 %}">Logout</a>
+</body>
+</html>

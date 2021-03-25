@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View the students of the course</title>
+</head>
+<body>
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>
+                Count
+            </th>
+            <th>
+                Student id
+            </th>
+            <th>
+                Student name
+            </th>
+            <th>
+                Student profile
+            </th>
+            <th>
+                View
+            </th>
+        </tr>
+        {% for i in perpage_data %}
+            <tr>
+                <td>
+                    {{ forloop.counter}}
+                </td>
+                <td>
+                    {{ i.sid}}
+                </td>
+                <td>
+                    {{ i.sname}}
+                </td>
+                <td>
+                    <img src="{{MEDIA_URL}}student_image/{{ i.image }}">
+                </td>
+                <td>
+                <a href="{% url 'uic:teaViewstu' i.sid%}">View the student</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    {% if perpage_data.has_previous %}
+        <a href="{% url 'uic:teaViewcourse' perpage_data.previous_page_number cname%}">Last Page</a>
+    {% endif %}&emsp;
+    {% for n in  pagelist%}
+        <a href="{% url 'uic:teaViewcourse' n cname %}">{{ n }}</a> &emsp;
+    {% endfor %}
+    {% if perpage_data.has_next %}
+        <a href="{% url 'uic:teaViewcourse' perpage_data.next_page_number cname%}">Next Page</a>
+    {% endif %}&emsp;
+    <br>
+    <a href="{% url 'uic:teaInfo' %}">Back</a>
+</body>
+</html>

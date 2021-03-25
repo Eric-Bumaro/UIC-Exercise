@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher information</title>
+</head>
+<body>
+    <h1>For this student:</h1>
+    <br>
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>{{ user.sid }}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{ user.sname }}</td>
+        </tr>
+        <tr>
+            <td>Time register</td>
+            <td>{{ user.register_time }}</td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td><img src="/media/student_image/{{ user.image }}"/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ user.emailAdd }}</td>
+        </tr>
+        <tr>
+            <td>Course</td>
+            <td>{{ user.course_field }}</td>
+        </tr>
+    </table>
+    <button onclick="window.history.back()">Back</button>
+</body>
+</html>

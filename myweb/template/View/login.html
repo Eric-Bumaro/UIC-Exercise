@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login in</title>
+    <link rel="stylesheet" type="text/css" href="/static/login.css">
+</head>
+<script src="/static/jquery-3.4.1.min.js"></script>
+<script>
+        function showStuLog(){
+            document.getElementById("teaPro").style.display="none"
+            document.getElementById("stuPro").style.display="block"
+            document.getElementById("id").required=true
+            document.getElementById("tname").required=false
+        }
+        function showTeaLog(){
+            document.getElementById("stuPro").style.display="none"
+            document.getElementById("teaPro").style.display="block"
+            document.getElementById("tname").required=true
+            document.getElementById("id").required=false
+        }
+</script>
+<body>
+    <dir>
+    <form action="{% url 'uic:login' 0 %}" method="post">
+        {% csrf_token %}
+        <p>
+            <input type="radio" name="user" id="Student" value="Student" onclick="showStuLog()">Student
+            &emsp;
+            <input type="radio" name="user" id="Teacher" value="Teacher" onclick="showTeaLog()">Teacher
+        </p>
+        <div class="tip">
+            <p style="display: none" id="stuPro"><label class="tipText" for="sid">ID:</label><br><input type="text" name="sid" id="id" value="{{ id }}" required/></p>
+            <p style="display: none" id="teaPro"><label class="tipText" for="tname">Name:</label><br><input type="text" name="tname" id="tname" value="{{ id }}" required/></p>
+        </div>
+        <p class="tip">
+            <label class="tipText" for="pwd">Password:</label><p><input type="password" name="pwd" id="pwd" value="{{ pwd }}" required/>
+        </p>
+        <p>
+            <h3 id="errormsg"></h3>
+        </p>
+        <p>
+            <input type="checkbox" name="cookie" value=1>Remember the id and password(3 days)
+        </p>
+        <p>
+            <label>&emsp;&emsp;&emsp;</label><input type="submit" value="Login"/>
+            &emsp;<a href="{% url 'uic:forgetpwd'%}">Forget password</a>
+        </p>
+        <br>
+        <a href="/welcome/">Back to the Welcome Page</a>
+    </form>
+    </dir>
+</body>
+<script>
+        if({{ error|safe }}==1){
+            document.getElementById("errormsg").innerHTML="Please choose your user type!";
+        }else if({{ error|safe }}==2){
+            document.getElementById("errormsg").innerHTML="ID or passsword is wrong!!!";
+        }
+        if({{ type|safe }}=="Teacher"){
+            document.getElementById("Teacher").click()
+        }else if({{ type|safe }}=="Student"){
+            document.getElementById("Student").click()
+        }
+</script>
+</html>

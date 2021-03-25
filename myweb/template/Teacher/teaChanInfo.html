@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change StudentInfor</title>
+</head>
+<script src="/static/jquery-3.4.1.min.js"></script>
+<script>
+    var userKey;
+    var usertype = "1";
+
+    function send_Hiderpass(){
+        var tname="{{ tname|safe}}"
+        tname.replace(" ","-")
+        $.ajax({
+            type: "POST",
+            url: "/getUserKey/%23type=" + usertype + "&id=" + tname,
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: function (response) {
+                userKey = response
+            }
+        });
+        if (userKey == 1) {
+            document.getElementById("errormsg").innerHTML = "Please choose your user type!";
+        }
+        if (userKey == 2) {
+            document.getElementById("errormsg").innerHTML = "Wrong name!";
+        }
+        if (userKey == 3) {
+            document.getElementById("errormsg").innerHTML = "Wrong ID!";
+        }
+        var sendKeybu = document.getElementById("sendKeybu")
+        for (let i = 0; i <= 60; i++) {
+            (function (j) {
+                    setTimeout(function () {
+                        sendKeybu.innerHTML = "<label>You can try again after " + (60 - j) + " seconds!</label>"
+                        if (j == 60) {
+                            sendKeybu.innerHTML = "<button onclick='send_Hide()'>Click here to send!</button>"
+                        }
+                    }, 1000 * i)
+                }
+            )(i);
+        }
+    }
+    function send_HiderEmail(){
+        var newEmailAdd=document.getElementById("newEmailAdd").value.replace("@","%40")
+        $.ajax({
+            type: "POST",
+            url: '/sendCheckKey/%23emailAdd='+newEmailAdd,
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: function (response) {
+                userKey = response
+            }
+        });
+        if (userKey == 1) {
+            document.getElementById("errormsg").innerHTML = "Invalid email address!";
+        }
+        var sendKeybu = document.getElementById("sendKeybu")
+        for (let i = 0; i <= 60; i++) {
+            (function (j) {
+                    setTimeout(function () {
+                        sendKeybu.innerHTML = "<label>You can try again after " + (60 - j) + " seconds!</label>"
+                        if (j == 60) {
+                            sendKeybu.innerHTML = "<button onclick='send_Hide()'>Click here to send!</button>"
+                        }
+                    }, 1000 * i)
+                }
+            )(i);
+        }
+    }
+    function check() {
+        if({{ changeType_js|safe }}=="password")
+        {
+            var pwOne = document.forms["teaChaForm"]["pwd"].value;
+            var pwTwo = document.forms["teaChaForm"]["check_pwd"].value;
+            if (pwOne != pwTwo) {
+                document.getElementById("errormsg").innerHTML = "Not the same password";
+                return false;
+            } else if (pwOne.length < 3) {
+                document.getElementById("errormsg").innerHTML = "The length of the password must be larger than three!";
+                return false;
+            }
+            if (document.forms["teaChaForm"]["userKey"].value != userKey) {
+                document.getElementById("errormsg").innerHTML = "Wrong check-key!";
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+<body>
+    <form action="{% url 'uic:teaChange' changeType_py%}" method="post" name="teaChaForm" enctype="multipart/form-data" onsubmit="return check()">
+        {% csrf_token %}
+        {% ifequal changeType_py "emailAdd" %}
+            Input your new email address:<input type="email" id="newEmailAdd" name="newEmailAdd"required/>
+            <br>
+            <label for="userKey">Send a check-id key to your Email address and check it:</label>
+            <input type="text" id="userKey" name="userKey" required>
+            <label id="sendKeybu"><button onclick="send_HiderEmail()">Click here to send!</button></label>
+        {% endifequal %}
+        {% ifequal changeType_py "tname" %}
+           new Name:<input type="text" name="newName" id="newName" maxlength="20" required>
+        {% endifequal %}
+        {% ifequal changeType_py "password" %}
+            <label for="pwd">&emsp;&emsp;&emsp;&emsp;Password:</label><input type="password" name="pwd" id="pwd" required>
+            <br>
+            <label for="check_pwd"> Confirm Password:</label><input type="password" name="check_pwd" id="check_pwd" required>
+            <br>
+            <label for="userKey">Send a check-id key to your Email address and check it:</label>
+            <input type="text" id="userKey" name="userKey" required>
+            <label id="sendKeybu"><button onclick="send_Hiderpass()">Click here to send!</button></label>
+        {% endifequal %}
+        <p>
+            <h3 id="errormsg"></h3>
+        </p>
+        <label>&emsp;&emsp;&emsp;</label><input type="submit" value="Change">
+        <a href="{% url 'uic:teaInfo' %}">Back to the Last Page</a>
+    </form>
+</body>
+</html>

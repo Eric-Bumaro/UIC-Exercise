@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher personal information</title>
+</head>
+<body>
+    <h2>Welcome to the website of XDW</h2>
+    <br>
+    <h1>Here is your personal information:</h1>
+    <br>
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Function</th>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>{{ teacher.tid }}</td>
+            <td>Change ID is not allowed!</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{ teacher.tname }}</td>
+            <td><a href="{% url 'uic:teaChange' 'tname' %}">Click here to change!</a></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ teacher.emailAdd }}</td>
+            <td><a href="{% url 'uic:teaChange' 'emailAdd' %}">Click here to change!</a></td>
+        </tr>
+    </table>
+    You can view the course you teach here:
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>
+                Course id
+            </th>
+            <th>
+                Course name
+            </th>
+            <th>
+                To view
+            </th>
+        </tr>
+        {% for i in course_set %}
+            <tr>
+                <td>
+                    {{ i.cid}}
+                </td>
+                <td>
+                    {{ i.cname}}
+                </td>
+                <td>
+                    <a href="{% url 'uic:teaViewcourse' 1 i.cname %}">To view</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'uic:teaChange' 'password' %}">Here to change your password!</a>
+    <br>
+    <a href="{% url 'uic:login' 3%}">Logout</a>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="/static/jquery-3.4.1.min.js"></script>
+<script>
+    function showStuRes(){
+        document.getElementById("teaRegis").style.display="none"
+        document.getElementById("stuPro").style.display="block"
+    }
+    function showTeaRes(){
+        document.getElementById("stuPro").style.display="none"
+        document.getElementById("teaRegis").style.display="block"
+    }
+    var teakey;
+    function send_Hide(){
+        $.ajax({
+            type: "POST",
+            url: "{%  url 'getTeaKey'%}",
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success:  function(response){
+                teakey=response
+           }
+        });
+        var sendKeybu = document.getElementById("sendKeybu")
+        for(let i=0;i<=60;i++){
+            (function(j){
+		        setTimeout(function(){
+                sendKeybu.innerHTML = "<label>You can try again after " + (60-j) + " seconds!</label>"
+                if(j==60){
+                    sendKeybu.innerHTML = "<button onclick='send_Hide()'>Click here to send!</button>"
+                }
+		    },1000*i)}
+	        )(i);
+        }
+    }
+    function check(){
+        var pwOne=document.forms["registeForm"]["pwd"].value;
+        var pwTwo=document.forms["registeForm"]["check_pwd"].value;
+        if(pwOne!=pwTwo){
+            document.getElementById("checkRes").innerHTML="Not the same password";
+            return false;
+        }else if(pwOne.length<3){
+            document.getElementById("checkRes").innerHTML="The length of the password must be larger than three!";
+            return false;
+        }
+        if(document.getElementById("Teacher").checked){
+            if(document.forms["registeForm"]["teaKey"].value!=teakey){
+                document.getElementById("checkRes").innerHTML="Wrong check-key!";
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>New Register</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="/static/register.css">
+</head>
+<body>
+    <dir>
+    <form action="/user/register/" method="post" name="registeForm" onsubmit="return check()" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            <label for="name">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Name:</label><input type="text" name="name" id="name" maxlength="20" required>
+        </p>
+        <p>
+            <label for="pwd">&emsp;&emsp;&emsp;&emsp;Password:</label><input type="password" name="pwd" id="pwd" required>
+        </p>
+        <p>
+            <label for="check_pwd"> Confirm Password:</label><input type="password" name="check_pwd" id="check_pwd" required>
+        </p>
+        <p>
+            <label for="email">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Email:</label><input type="email" id="email" name="email" required>
+        </p>
+        <p>
+            <input type="radio" name="user" id="Student" value="Student" onclick="showStuRes()">Student
+            &emsp;
+            <input type="radio" name="user" id="Teacher" value="Teacher" onclick="showTeaRes()">Teacher
+        </p>
+        <p id="stuPro" style="display: none">
+            <label for="photo">&emsp;&emsp;Profile Photo:</label><input type="file" name="photo" id="photo" accept="image/*">
+        </p>
+        <p id="teaRegis" style="display: none">
+            <label for="TeaKey">Send a check-id key to the Email of the administrator and check it:</label>
+            <input type="text" id="teaKey" name="teaKey">
+            <label id="sendKeybu"><button onclick="send_Hide()">Click here to send!</button></label>
+        </p>
+        <p>
+            <label id="checkRes" style="color: #ea2020"></label>
+        </p>
+        <p>
+            <label>&emsp;&emsp;&emsp;</label><input type="submit" value="Register">
+            &emsp;
+            <a href="/welcome/">Back to the Welcome Page</a>
+        </p>
+    </form>
+    </dir>
+</body>
+</html>
